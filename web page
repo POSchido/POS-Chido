@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparador Interactivo | POS Chido: Beta vs. Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 50vh;
+        }
+        /* Animación para una carga suave del logo */
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fade-in 0.5s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <!-- Application Structure Plan: The application uses a top-down narrative flow to guide the user. It starts with a general introduction, moves to a detailed side-by-side card comparison for easy feature digestion, then presents a powerful visual summary via a radar chart to highlight the value of 'Pro'. It concludes with 'Ideal For' scenarios and a clear Call to Action. This structure is chosen over a static table to be more engaging, mobile-friendly, and persuasive, helping users quickly grasp the benefits and make a decision. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Feature comparison (Users, Inventory, Credit, Reports, Support).
+        - Goal: Visually compare Beta vs. Pro versions to highlight Pro's superior value.
+        - Viz/Presentation Method: 
+            1. Side-by-side cards (HTML/Tailwind) for direct feature comparison.
+            2. Radar Chart (Chart.js/Canvas) for a holistic, multi-dimensional view of feature completeness.
+        - Interaction: The chart is dynamic and responsive. Cards and buttons have hover states for user feedback.
+        - Justification: The radar chart offers an immediate, impactful visualization of the feature gap, which is more effective than text alone. The card layout is modern and responsive.
+        - Library/Method: Chart.js for the chart, HTML/Tailwind for the layout.
+    -->
+
+    <div class="container mx-auto px-4 py-8 md:py-12">
+
+        <header class="text-center mb-12">
+            <div class="flex justify-center mb-4">
+                <!-- Se ha incrustado un SVG Base64 como marcador de posición para el logo, ya que el archivo original no puede cargarse.
+                Normalmente, aquí se usaría un enlace a una imagen alojada en un servidor, por ejemplo: <img src="https://tuservidor.com/logo-pos-chido.png">
+                o el Base64 de tu imagen real si el archivo fuera más pequeño. -->
+                <img id="pos-chido-logo" alt="Logo de POS Chido" class="h-16 animate-fade-in">
+            </div>
+            <h1 class="text-3xl md:text-5xl font-bold text-slate-900">Elige la solución que impulsa tu negocio</h1>
+            <p class="mt-4 text-lg text-slate-600">Compara nuestras versiones y descubre cuál se adapta mejor a tus necesidades.</p>
+        </header>
+
+        <main>
+            <section id="comparison" class="mb-16">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                    
+                    <!-- Tarjeta de la versión Beta -->
+                    <div class="border-2 border-slate-200 bg-white rounded-2xl p-6 shadow-sm">
+                        <h2 class="text-2xl font-bold text-slate-700 mb-4">POS Chido <span class="bg-slate-200 text-slate-700 text-sm font-semibold px-2 py-1 rounded-md">Beta</span></h2>
+                        <p class="text-slate-600 mb-6">Ideal para explorar las funciones básicas y conocer el sistema.</p>
+                        <ul class="space-y-4">
+                            <li class="flex items-start"><span class="text-2xl mr-3">👤</span><div><strong class="text-slate-800">Gestión de Usuarios:</strong><br>Un solo usuario administrador.</div></li>
+                            <li class="flex items-start"><span class="text-2xl mr-3">📦</span><div><strong class="text-slate-800">Inventario:</strong><br>Limitado a 20 productos para demostración.</div></li>
+                            <li class="flex items-start"><span class="text-2xl mr-3">💳</span><div><strong class="text-slate-800">Fiado (Crédito):</strong><br>Módulo deshabilitado.</div></li>
+                            <li class="flex items-start"><span class="text-2xl mr-3">📊</span><div><strong class="text-slate-800">Reportes:</strong><br>Reportes básicos de ventas por rango de fechas.</div></li>
+                            <li class="flex items-start"><span class="text-2xl mr-3">🛠️</span><div><strong class="text-slate-800">Soporte Técnico:</strong><br>Soporte básico a través de comunidad o foro.</div></li>
+                        </ul>
+                    </div>
+
+                    <!-- Tarjeta de la versión Pro -->
+                    <div class="border-2 border-blue-600 bg-white rounded-2xl p-6 shadow-lg relative">
+                        <div class="absolute top-0 right-6 -mt-4 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Recomendado</div>
+                        <h2 class="text-2xl font-bold text-blue-700 mb-4">POS Chido <span class="bg-blue-600 text-white text-sm font-semibold px-2 py-1 rounded-md">Pro</span></h2>
+                        <p class="text-slate-600 mb-6">La herramienta definitiva para gestionar tu operación de principio a fin.</p>
+                        <ul class="space-y-4">
+                            <li class="flex items-start"><span class="text-2xl mr-3 text-blue-600">👥</span><div><strong class="text-slate-800">Gestión de Usuarios:</strong><br>Múltiples usuarios y roles. Gestión completa.</div></li>
+                            <li class="flex items-start"><span class="text-2xl mr-3 text-blue-600">♾️</span><div><strong class="text-slate-800">Inventario:</strong><br>Número ilimitado de productos. Sin restricciones.</div></li>
+                            <li class="flex items-start"><span class="text-2xl mr-3 text-blue-600">💳</span><div><strong class="text-slate-800">Fiado (Crédito):</strong><br>Módulo completo para registrar y gestionar deudas.</div></li>
+                            <li class="flex items-start"><span class="text-2xl mr-3 text-blue-600">📈</span><div><strong class="text-slate-800">Reportes:</strong><br>Reportes avanzados de ventas, compras e inventario.</div></li>
+                            <li class="flex items-start"><span class="text-2xl mr-3 text-blue-600">🏆</span><div><strong class="text-slate-800">Soporte Técnico:</strong><br>Soporte prioritario y acceso a actualizaciones futuras.</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección de visualización con el gráfico de radar -->
+            <section id="visualization" class="text-center bg-white rounded-2xl shadow-md p-6 md:p-8 mb-16 max-w-4xl mx-auto">
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Comparación Visual de Características</h2>
+                <p class="text-slate-600 mb-8">Observa de un vistazo el alcance de cada versión. La versión Pro cubre todas tus necesidades.</p>
+                <div class="chart-container">
+                    <canvas id="featuresChart"></canvas>
+                </div>
+            </section>
+
+            <!-- Sección de Call to Action (CTA) -->
+            <section id="cta" class="text-center max-w-3xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">¿Listo para llevar tu negocio al siguiente nivel?</h2>
+                <p class="text-slate-600 mb-8">Empieza con la versión que más te convenga. Puedes escalar a la versión Pro en cualquier momento.</p>
+                
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                    <a href="mailto:ing.victorernesto@gmail.com?subject=Interesado en POS Chido Beta" class="w-full sm:w-auto bg-slate-200 text-slate-800 font-bold py-3 px-8 rounded-lg hover:bg-slate-300 transition-colors duration-300">
+                        Empezar con la Prueba Gratis
+                    </a>
+                    <a href="mailto:ing.victorernesto@gmail.com?subject=Quiero adquirir POS Chido Pro" class="w-full sm:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors duration-300">
+                        Adquirir la Versión Pro
+                    </a>
+                </div>
+
+                <div class="mt-12 text-center text-slate-500">
+                    <p>Para más detalles, contáctanos:</p>
+                    <p class="font-semibold text-slate-700 mt-1">ing.victorernesto@gmail.com</p>
+                    <p class="mt-2">o a través de nuestro <a href="#" class="text-blue-600 hover:underline">canal de Youtube</a>.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Función para codificar un SVG sencillo en Base64
+        function createBase64Logo() {
+            const svgContent = `<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 24 24">
+                <rect width="24" height="24" rx="4" ry="4" fill="#0f172a" />
+                <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Inter, sans-serif" font-size="5" font-weight="bold" fill="#f8fafc">POS CHIDO</text>
+            </svg>`;
+            return 'data:image/svg+xml;base64,' + btoa(svgContent);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const logoElement = document.getElementById('pos-chido-logo');
+            // Asigna el SVG Base64 al elemento de imagen.
+            logoElement.src = createBase64Logo();
+
+            // Configuración del gráfico de radar
+            const ctx = document.getElementById('featuresChart').getContext('2d');
+            const featuresChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Usuarios', 'Inventario', 'Fiado (Crédito)', 'Reportes', 'Soporte'],
+                    datasets: [{
+                        label: 'POS Chido Beta',
+                        data: [2, 2, 1, 3, 3],
+                        backgroundColor: 'rgba(100, 116, 139, 0.2)',
+                        borderColor: 'rgba(100, 116, 139, 1)',
+                        borderWidth: 2,
+                        pointBackgroundColor: 'rgba(100, 116, 139, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(100, 116, 139, 1)'
+                    }, {
+                        label: 'POS Chido Pro',
+                        data: [10, 10, 10, 10, 10],
+                        backgroundColor: 'rgba(37, 99, 235, 0.2)',
+                        borderColor: 'rgba(37, 99, 235, 1)',
+                        borderWidth: 2,
+                        pointBackgroundColor: 'rgba(37, 99, 235, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(37, 99, 235, 1)'
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    responsive: true,
+                    scales: {
+                        r: {
+                            angleLines: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            },
+                            pointLabels: {
+                                font: {
+                                    size: 14,
+                                    weight: 'bold'
+                                },
+                                color: '#0f172a'
+                            },
+                            ticks: {
+                                backdropColor: 'rgba(255, 255, 255, 0.75)',
+                                color: '#475569',
+                                stepSize: 2,
+                                display: false 
+                            },
+                            suggestedMin: 0,
+                            suggestedMax: 10
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    let value = context.parsed.r;
+                                    if (value < 5) {
+                                        label += 'Básico/Limitado';
+                                    } else {
+                                        label += 'Completo/Avanzado';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
